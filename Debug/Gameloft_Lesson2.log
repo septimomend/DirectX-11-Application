@@ -93,4 +93,5 @@ c:\sdk\microsoftdirectxsdk\include\xnamathconvert.inl(4832): warning C4838: conv
 c:\sdk\microsoftdirectxsdk\include\xnamathvector.inl(1269): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
 c:\sdk\microsoftdirectxsdk\include\xnamathmisc.inl(518): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
 c:\sdk\microsoftdirectxsdk\include\xnamathmisc.inl(519): warning C4838: conversion from 'unsigned int' to 'INT' requires a narrowing conversion
-LINK : fatal error LNK1168: cannot open C:\Users\Chapkailo\Documents\GitHub\DirectX-11-Application\Debug\Gameloft_Lesson2.exe for writing
+  Gameloft_Lesson2.vcxproj -> C:\Users\Chapkailo\Documents\GitHub\DirectX-11-Application\Debug\Gameloft_Lesson2.exe
+  Gameloft_Lesson2.vcxproj -> C:\Users\Chapkailo\Documents\GitHub\DirectX-11-Application\Debug\Gameloft_Lesson2.pdb (Full PDB)
