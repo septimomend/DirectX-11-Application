@@ -39,14 +39,16 @@ int WINAPI WinMain(HINSTANCE hInstance,
 // global variables
 // Глобальні змінні
 //--------------------------------------------------------------------------------------
+// змінні зберігання екземплярів вікна / storing copies variables of windows
 HINSTANCE               g_hInst = NULL;
 HWND                    g_hWnd = NULL;
+// Direct3D
 D3D_DRIVER_TYPE         g_driverType = D3D_DRIVER_TYPE_NULL;
 D3D_FEATURE_LEVEL       g_featureLevel = D3D_FEATURE_LEVEL_11_0;
-ID3D11Device*           g_pd3dDevice = NULL;
-ID3D11DeviceContext*    g_pImmediateContext = NULL;
-IDXGISwapChain*         g_pSwapChain = NULL;
-ID3D11RenderTargetView* g_pRenderTargetView = NULL;
+ID3D11Device*           g_pd3dDevice = NULL; // головний об'єкт, через який ми будемо звертатися до пристрою / The main object through which we will refer to the device
+ID3D11DeviceContext*    g_pImmediateContext = NULL; //другий головний успадкований об'єкт / Second main inherited object
+IDXGISwapChain*         g_pSwapChain = NULL; // об'єкт для ланцюжка-обміну / Object for chain-swap
+ID3D11RenderTargetView* g_pRenderTargetView = NULL; //поверхня для рендеринга / surface for rendering
 
 
 //--------------------------------------------------------------------------------------
@@ -107,6 +109,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow)
 {
 	// Register class
+	// Регістрація класа вікна
 	WNDCLASSEX wcex;
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -118,18 +121,18 @@ HRESULT InitWindow(HINSTANCE hInstance, int nCmdShow)
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	wcex.lpszMenuName = NULL;
-	wcex.lpszClassName = L"Article1";
+	wcex.lpszClassName = L"Lesson2";
 	wcex.hIconSm = LoadIcon(wcex.hInstance, (LPCTSTR)IDI_TUTORIAL1);
 	if (!RegisterClassEx(&wcex))
 		return E_FAIL;
 
 	// Create window
+	// Створення вікна
 	g_hInst = hInstance;
-	RECT rc = { 0, 0, 533, 400 };
+	RECT rc = { 0, 0, 1366, 768 }; // розмір / size
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
-	g_hWnd = CreateWindow(L"Gameloft_Homework", L"Lesson2", WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, hInstance,
-		NULL);
+	g_hWnd = CreateWindow(L"Gameloft_Homework", L"Lesson2", 
+		WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, hInstance, NULL);
 	if (!g_hWnd)
 		return E_FAIL;
 
@@ -208,6 +211,8 @@ HRESULT InitDevice()
 
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory(&sd, sizeof(sd));
+	// sd structure parameters
+	// параметри структури sd
 	sd.BufferCount = 1;
 	sd.BufferDesc.Width = width;
 	sd.BufferDesc.Height = height;
@@ -243,7 +248,8 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
-
+	// Specify Direct3D that this target renderer should be used by default and that it is up to him to draw everything
+	// Вказуємо Direct3D, що цей рендер-таргет треба використовувати за замовчуванням і що саме в нього і треба все малювати
 	g_pImmediateContext->OMSetRenderTargets(1, &g_pRenderTargetView, 0);
 
 	// Setup the viewport
