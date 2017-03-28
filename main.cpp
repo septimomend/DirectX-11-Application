@@ -564,7 +564,7 @@ void Render()
 	// Setting a transformation for a cube
 	// Установка трансформації для куба
 	g_World = XMMatrixRotationX(3.14159f / 6.0f);
-	//g_WorldY = XMMatrixRotationY(3.14159f / 6.0f);
+	g_World *= XMMatrixRotationY(3.14159f / 6.0f);
 	//g_WorldZ = XMMatrixRotationZ(0.0f);
 	
 	// Clearing a render-TARGET
@@ -588,7 +588,7 @@ void Render()
 	g_pImmediateContext->VSSetShader(g_pVertexShader, NULL, 0);
 	g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer);
 	g_pImmediateContext->PSSetShader(g_pPixelShader, NULL, 0);
-	g_pImmediateContext->DrawIndexed(36, 0, 0);       // 36 вершин утворюють 12 полігонів, по три вершини на полігон /
+	g_pImmediateContext->DrawIndexed(36, 0, 0);       // 36 вершин утворюють 12 полігонів, по три вершини на полігон
 													  // 36 vertices form 12 polygons, three vertices per polygon
 
 	// Displaying the contents of the render-target
